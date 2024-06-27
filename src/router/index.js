@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
+import HomeView from '@/views/user/HomeView.vue'
 
 import SearchView from '@/views/user/SearchView.vue'
 import CartView from '@/views/user/CartView.vue'

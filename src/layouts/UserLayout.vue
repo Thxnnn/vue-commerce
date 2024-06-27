@@ -1,14 +1,18 @@
 <script setup>
 
 import { ref, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
+
 
 
 
 const isLoginedIn = ref(false)
+const searchText = ref('')
+
+const router = useRouter()
 
 onMounted(() => {
-    if(localStorage.getItem('isLoginedIn')) {
+    if (localStorage.getItem('isLoginedIn')) {
         isLoginedIn.value = true;
     }
 })
@@ -27,17 +31,33 @@ const logoot = () => {
 
 }
 
+const handleSearch = (event) => {
+    // console.log(event.key)
+    if (event.key === "Enter") {
+        router.push({
+            name: 'search',
+            query: {
+                q: searchText.value
+            }
+        })
+    }
+}
+
 </script>
 
 <template>
     <div class=" container mx-auto">
         <div class="navbar bg-base-100">
             <div class="flex-1">
-                <RouterLink :to="{ name:'home' }" class="btn btn-ghost text-xl">Meow Shop</RouterLink>
+                <RouterLink :to="{ name: 'home' }" class="btn btn-ghost text-xl">Meow Shop</RouterLink>
             </div>
             <div class="flex-none gap-2">
                 <div class="form-control">
-                    <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+                    <input 
+                        type="text"     
+                        placeholder="Search" class="input input-bordered w-24 md:w-auto"
+                        v-model="searchText" 
+                        @keyup="handleSearch"/>
                 </div>
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
